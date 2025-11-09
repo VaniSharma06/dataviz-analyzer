@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Simple styling to center the chart */
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background-color: #f4f4f4;}
+        .chart-container { width: 80%; max-width: 800px; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body>
+
+<div class="chart-container">
+    <h1>Monthly Sales Summary</h1>
+    <canvas id="mySalesChart"></canvas>
+</div>
+
+<script>
+    async function renderSalesChart() {
+        // URL of your Spring Boot API endpoint (must be running!)
+        const apiUrl = 'http://localhost:8080/api/data/sales';
+
+        try {
+            // 1. Fetch the data from the Spring Boot API
+            const response = await fetch(apiUrl);
+            const dataPoints = await response.json(); // DataPoints is a list of {label, value}
+
+            // 2. Prepare data for Chart.js
+            const labels = dataPoints.map(p => p.label); // e.g., ["January", "February", ...]
+            const dataValues = dataPoints.map(p => p.value); // e.g., [1500.00, 2200.50, ...]
+
+            // 3. Define the chart configuration
+            const chartConfig = {
+                type: 'bar', // Can be 'line', 'pie', 'doughnut', etc.
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Sales (USD)',
+                        data: dataValues,
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+
+            // 4. Get the canvas element and create the chart
+            const ctx = document.getElementById('mySalesChart').getContext('2d');
+            new Chart(ctx, chartConfig);
+
+        } catch (error) {
+            console.error("Error fetching data from Spring Boot:", error);
+            document.querySelector('.chart-container').innerHTML = '<h2>Error loading data. Is the Spring Boot server running?</h2>';
+        }
+    }
+
+    // Run the function when the page loads
+    renderSalesChart();
+</script>
+
+</body>
+</html>
