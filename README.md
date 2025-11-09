@@ -1,81 +1,95 @@
-Comprehensive .gitignore for Spring Boot / Java
+📊 Full-Stack DataViz: Spring Boot & Chart.js
 
------------------------------------------------
+From Database to Dashboard: A 3-Tier Application for Real-Time Sales Trend Analysis.
 
-IDE and Build Artifacts
+✨ Project Overview
 
-IntelliJ IDEA specific files
+This repository contains the code for a complete, end-to-end data visualization solution. The system demonstrates a robust separation of concerns, utilizing a Java backend for data processing and a dedicated HTML/JavaScript client for presentation.
 
-.idea/
-*.iws
-*.iml
-*.ipr
+🚀 Tech Stack Highlights
 
-Eclipse specific files
+Language
 
-.metadata
-.project
-.classpath
-.settings/
-*.log
-*.bak
+Framework/Tool
 
-VS Code specific files
+Runtime
 
-.vscode/
+Database
 
-Maven generated directories and files
+Java
 
-/target/
+Spring Boot 3.x
 
-Gradle generated directories and files
+Node.js (for testing)
 
-.gradle/
-/build/
+H2 (In-Memory)
 
-Compiled class files
+JavaScript
 
-*.class
-/bin/
+Chart.js
 
-Operating System Files
+Browser
 
-.DS_Store
-Thumbs.db
+N/A
 
-Packaging and Artifacts
+🏷️ Technology Badges (Mockup)
 
-Logs, temporary files, and output
+⚙️ Architecture and Data Flow
 
-*.log
-log/
-temp/
-/tmp/
+The application is structured into three logical tiers, ensuring maintainability and scalability.
 
-Jar, War, Ear files
+Frontend Client (index.html)
 
-*.jar
-*.war
-*.ear
+Initiates an HTTP GET Request to the backend API (http://localhost:8080/api/data/sales).
 
-Spring Boot Specific
+Uses Chart.js to parse the resulting JSON and render the final visualization.
 
-Embedded H2 Database files (H2 is often configured to store data in files)
+Backend API (Spring Boot)
 
-If your H2 database is file-based, these must be ignored!
+Controller: Receives the request and routes it. Uses the @CrossOrigin annotation to prevent browser security errors.
 
-Check your application.properties for the database file name.
+Service: Executes the business logic (data fetching, analysis, and transformation into DataPoint DTOs).
 
-*.mv.db
-*.trace.db
+Data Layer (H2/JPA)
 
-Other common configuration files (uncomment if you store secrets here)
+Persists the raw sales records. Spring Data JPA handles all database interactions.
 
-application-dev.properties
+🛠️ Getting Started
 
-application-prod.properties
+Prerequisites
 
-Generated documentation
+JDK 17+
 
-/doc/
-/docs/
+Maven or Gradle (for the Spring Boot project)
+
+A modern web browser (Chrome, Firefox, Edge)
+
+Step 1: Launch the Backend Server
+
+Clone this repository locally.
+
+Open the Spring Boot project in your preferred IDE (IntelliJ, VS Code, Eclipse).
+
+Run the main application class (e.g., DatavizApplication.java).
+
+✅ Verification: Ensure the server starts successfully on port 8080.
+You should be able to view the raw JSON data in your browser at:
+http://localhost:8080/api/data/sales
+
+Step 2: View the Visualization
+
+Navigate to the directory containing the index.html file.
+
+Double-click on index.html or open it using your web browser.
+
+The JavaScript in index.html will automatically connect to your running Spring Boot API and draw the sales chart.
+
+🎨 Visualization Details
+
+The current client renders an Attractive Line Chart.
+
+Design Choice: A line chart was chosen to effectively highlight sales trends and performance over time.
+
+Styling: Features include smooth curves (tension: 0.4), a subtle light blue fill under the line, and clean, high-contrast typography.
+
+Responsiveness: The chart is fully responsive, resizing automatically to fit various screen sizes.
